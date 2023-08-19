@@ -1,0 +1,206 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.message-list {
+    padding: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.message-container {
+    display: flex;
+    justify-content: flex-start;
+    margin: 5px 0;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+.sender-message {
+    background-color: #084be6;
+    color: white;
+    align-self: flex-start;
+    float: left;
+    clear: both;
+    margin:1px;
+}
+
+.receiver-message {
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    align-self: flex-end;
+    float: right;
+    clear: both;
+    margin:1px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc;
+    padding: 10px;
+}
+
+#input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+
+#sendBtn {
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+
+/* ... existing styles ... */
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* This aligns items to the start and end of the container */
+    position: absolute;
+    bottom: 0; /* Stick to the bottom */
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #f2f2f2;
+}
+
+#input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 5px;
+}
+
+#sendBtn {
+    border: none;
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Style for the popup form */
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.popup h2 {
+    margin-top: 0;
+}
+
+.popup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.popup input[type="text"],
+.popup select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup input[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Style for the chat messages */
+.message-list {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.message {
+    margin: 5px 0;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+.receiver-message {
+    background-color: #f0f0f0;
+}
+
+.sender-message {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Additional styling for the chat header and input container */
+.chat-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.input-container {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.input-container input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+

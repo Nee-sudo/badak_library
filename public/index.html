@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Picture and PDF with Title</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Badak_library</h1>
+    </header>
+    <!-- Navbar-->
+    <ul class="topnav">
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="chat.html">Chatroom</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="right"><a href="#about">About</a></li>
+      </ul>
+
+    <div class="book_container">
+        <div class="book1"><img name="bookImage" src="" alt=""></div>
+    </div>
+    <div class="upload_container">
+        <h1>Upload a PDF</h1>
+        <button class="round-button"  id="plusbutton" onclick="openform()">+</button>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label for="studentname">Student name</label>
+            <input type="text" id="studentname" name="studentname" placeholder="Enter your name" required>
+            <label for="pdfTitle">Subject</label>
+            <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter the subject" required>            
+            
+            <label for="pdfFile">Select PDF:</label>
+            <input type="file" id="pdfFile" name="pdf" accept=".pdf" placeholder="Select a PDF file" required>
+            <button type="submit" onclick="closeform()">Upload</button>
+        </form>
+
+        <div id="pdfList">
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Pdf viewer</h2>
+        <button id="closeButton">Close</button>
+    </div>
+    
+    <script src="script.js"></script>
+    
+    
+
+</body>
+</html>

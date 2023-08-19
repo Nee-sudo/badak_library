@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chatroom</title>
+    <link rel="stylesheet" type="text/css" href="chat.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- The popup form -->
+        <div id="popupForm" class="popup">
+            <h2>Enter your information</h2>
+            <form id="userInfoForm">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <input type="submit" id="Submit" value="Submit">
+            </form>
+        </div>
+
+        <!-- Chat messages container -->
+        <div class="chat-header">
+            Chatroom
+        </div>
+        <div class="message-list" id="messages">
+            <!-- Messages will be added here -->
+        </div>
+
+        <!-- Input container for messages and GIFs -->
+        <div class="input-container">
+            <input id="input" autocomplete="off" />
+            <button id="sendBtn" onclick="send()">Send</button> <!-- Send text messages -->
+            <input type="file" id="gifInput" accept=".gif"> <!-- Input for sending GIFs -->
+        </div>
+    </div>
+
+    <!-- Load jQuery and Socket.io -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let you = ''; // Declare 'you' variable in the global scope
+
+        // Function to send text messages
+        function send() {
+            var message = document.getElementById("input").value;
+            if (message.trim() === '') {
+                alert("Enter your message please");
+                return;
+            }
+            console.log(message);
+            var html = '<div class="message receiver-message">' + message + '</div>';
+            document.getElementById("messages").innerHTML += html;
+        }
+
+        $(function () {
+            const popupForm = $('#popupForm');
+            const userInfoForm = $('#userInfoForm');
+            const nameInput = $('#name');
+
+            // Show popup form when the page loads
+            popupForm.show();
+
+            // Handle form submission to capture the user's name
+            userInfoForm.submit(function (event) {
+                event.preventDefault();
+                you = nameInput.val(); // Set the 'you' variable with the entered name
+                if (you.trim() === '') {
+                    alert("Enter your name please");
+                    return;
+                }
+                popupForm.hide(); // Hide the popup form
+            });
+
+            const socket = io();
+            const messagesList = $('#messages');
+
+            // Handle sending text messages
+            $('#sendBtn').click(function () {
+                const message = $('#input').val();
+                if (message.trim() !== '') {
+                    socket.emit('chat message', { username: you, message: message });
+                    $('#input').val('');
+                }
+            });
+
+            // Handle sending GIFs
+            $('#gifInput').on('change', function (e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = function (event) {
+                    const gifData = event.target.result;
+                    socket.emit('send gif', { username: you, gifData: gifData });
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            // Handle receiving text messages
+            socket.on('chat message', function (data) {
+                const { username, message } = data;
+                const messageClass = username === 'Sender' ? 'receiver-message' : 'sender-message';
+                const messageElement = $('<div class="message ' + messageClass + '">').text(`${username}: ${message}`);
+                messagesList.append(messageElement);
+                messagesList.scrollTop(messagesList.prop("scrollHeight"));
+            });
+
+            // Handle receiving GIFs
+            socket.on('receive gif', function (data) {
+                const { username, gifData } = data;
+                const gifElement = $('<img class="message-gif">').attr('src', gifData);
+                const messageContainer = $('<div class="message-container">');
+                messageContainer.append(`${username}: `, gifElement);
+                messagesList.append(messageContainer);
+                messagesList.scrollTop(messagesList.prop("scrollHeight"));
+            });
+        });
+    </script>
+</body>
+</html>
