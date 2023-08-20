@@ -2,7 +2,7 @@
   "name": "badak-library", // Replace with your project name
   "builds": [
     {
-      "src": "server.js", // Entry point of your Node.js server
+      "src": "./server.js", // Entry point of your Node.js server
       "use": "@vercel/node"
     }
   ],
