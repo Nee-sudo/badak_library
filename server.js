@@ -34,7 +34,8 @@ const PDF = mongoose.model('PDF', pdfSchema);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Serve static files from the 'uploads' folder (PDF files)
-app.use('/pdfs', express.static(path.join(__dirname, 'uploads')));
+
+
 
 // Serve the 'uploads' folder
 app.use('/uploads', express.static('uploads'));
@@ -93,9 +94,17 @@ io.on('connection', (socket) => {
     console.log({ message: msg });
   });
 
-  socket.on('send gif', (data) => {
-    io.emit('receive gif', { username: data.username, gifData: data.gifData });
+
 });
+
+app.get('/pdfs', async (req, res) => {
+  try {
+    const pdfs = await PDF.find({}, 'title path');
+    res.json(pdfs);
+  } catch (err) {
+    console.error('Error fetching PDFs:', err);
+    res.status(500).json({ error: 'Failed to fetch PDFs' });
+  }
 });
 
 // Start the server
