@@ -145,5 +145,3 @@ function resetPopupContent() {
   // You can also close the overlay here if needed
   overlay.style.display = 'none';
 }
-
-
