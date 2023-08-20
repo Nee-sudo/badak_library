@@ -1,0 +1,27 @@
+{
+  "name": "badak-library", // Replace with your project name
+  "builds": [
+    {
+      "src": "./server.js", // Entry point of your Node.js server
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/pdfs/(.*)",
+      "dest": "/pdfs/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/uploads/$1"
+    },
+    {
+      "src": "/socket.io/(.*)",
+      "dest": "http://localhost:4000/socket.io/$1" // Change to your server's URL
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
