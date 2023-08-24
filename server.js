@@ -11,7 +11,7 @@ const io = socketIO(server);
 const port = process.env.PORT || 4000;
 
 // MongoDB configuration
-const MONGO_URI = 'mongodb://localhost:27017/pdf-uploading-site';
+const MONGO_URI = 'mongodb+srv://neer:bjFBXFCYd00Gifiv@pdf-uploading-site.ges8oic.mongodb.net/?retryWrites=true&w=majority';
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
