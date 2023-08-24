@@ -101,6 +101,11 @@ app.get('/pdfs', async (req, res) => {
   try {
     const pdfs = await PDF.find({}, 'title path');
     res.json(pdfs);
+    setHeaders: (res, path) => {
+      if (path.endsWith('.pdf')) {
+        res.setHeader('Content-Disposition', 'inline'); // Set to "inline" instead of "attachment"
+      }
+    }
   } catch (err) {
     console.error('Error fetching PDFs:', err);
     res.status(500).json({ error: 'Failed to fetch PDFs' });
