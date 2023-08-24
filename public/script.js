@@ -11,7 +11,10 @@ uploadForm.addEventListener('submit', (event) => {
   const formData = new FormData(uploadForm);
   const pdfTitle = document.getElementById('pdfTitle').value; // Get the PDF title from the form
   // Remove duplicate words from the title
- formData.set('pdfTitle', pdfTitle);
+  formData.set('pdfTitle', pdfTitle);
+  // Append the PDF title to the form data
+  // formData.append('pdfTitle', pdfTitle);
+
   fetch('/upload', {
     method: 'POST',
     body: formData,
