@@ -111,6 +111,7 @@ app.get('/pdfs', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch PDFs' });
   }
 });
+
 // Start the server
 server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
