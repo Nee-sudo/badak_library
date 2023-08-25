@@ -28,7 +28,7 @@ uploadForm.addEventListener('submit', (event) => {
     .then((data) => {
       console.log(data);
       // Refresh the PDF list after successful upload
-      setTimeout(fetchPDFList, 1000); // Add a slight delay to ensure the server processes the upload
+      setTimeout(fetchPDFList, 6000); // Add a slight delay to ensure the server processes the upload
     })
     .catch((error) => {
       console.error('Error:', error);
