@@ -11,12 +11,12 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.chat-header {
-    background-color: #007bff;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
+/* batcheet-header */
+.chat-header{
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
 }
 
 .message-list {
