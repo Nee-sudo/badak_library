@@ -3,13 +3,11 @@ body {
   margin: 0%;
   background-color: #f9f9f9;
 }
-
 h1 {
   text-align: center;
   margin-bottom: 40px;
   color: #140808;
 }
-
 header {
   text-align: center;
   background-color:#4839c8;
@@ -22,7 +20,6 @@ header {
 height: 0%;
 width: 0%;
 }
-
 form {
   max-width: 400px;
   margin: 0 auto;
@@ -33,17 +30,14 @@ form {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: none;
 }
-
 label {
   display: block;
   margin-bottom: 10px;
   font-weight: bold;
 }
-
 input[type="file"] {
   margin-bottom: 15px;
 }
-
 input[type="text"] {
   width: 100%;
   padding: 10px;
@@ -51,7 +45,6 @@ input[type="text"] {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
-
 input[type="submit"] {
   width: 100%;
   padding: 10px;
@@ -62,11 +55,9 @@ input[type="submit"] {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 input[type="submit"]:hover {
   background-color: #0056b3;
 }
-
 .pdf-box {
   display: inline-block;
   width: 300px;
@@ -74,11 +65,9 @@ input[type="submit"]:hover {
   border: 1px solid #ccc;
   padding: 10px;
 }
-
 .pdf-box h3 {
   margin-bottom: 10px;
 }
-
 .pdf-box button {
   display: block;
   margin: 10px 0;
@@ -88,18 +77,15 @@ input[type="submit"]:hover {
   padding: 8px 16px;
   cursor: pointer;
 }
-
 .pdf-box button:hover {
   background-color: #0056b3;
 }
-
 .embed-container {
   width: 100%;
   padding-top: 70%;
   position: relative;
   overflow: hidden;
 }
-
 .embed-container embed {
   position: absolute;
   top: 0;
@@ -107,15 +93,11 @@ input[type="submit"]:hover {
   width: 100%;
   height: 100%;
 }
-
 .upload_container {
- 
   justify-content: center;
   align-items: center;
   height: 100vh; /* Adjust as needed to control the vertical centering */
 }
-
-
 .round-button {
   width: 60px;
   height: 60px;
@@ -131,13 +113,20 @@ input[type="submit"]:hover {
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%);
 }
-
 .iframeElement{
   height:80%;
-  width: 100%
-  
+  width: 100% 
 };
 
+/* batcheet-header */
+.chat-header{
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
 /* Overlay background */
 .overlay {
   display: none;
