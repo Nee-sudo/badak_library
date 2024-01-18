@@ -122,8 +122,6 @@ input[type="submit"]:hover {
 .chat-header{
   font-size: 18px;
   font-weight: bold;
-  color: #333;
-  background-color: #f0f0f0;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }
