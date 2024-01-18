@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
+        <div class="chat-header">
+            Baatcheet
+        </div>
     <div class="chat-container">
         <!-- The popup form -->
         <div id="popupForm" class="popup">
@@ -16,29 +19,21 @@
                 <input type="submit" id="Submit" value="Submit">
             </form>
         </div>
-
         <!-- Chat messages container -->
-        <div class="chat-header">
-            Baatcheet
-        </div>
         <div class="message-list" id="messages">
             <!-- Messages will be added here -->
         </div>
-
         <!-- Input container for messages and GIFs -->
         <div class="input-container">
             <input id="input" autocomplete="off" />
             <button id="sendBtn" onclick="send()">Send</button> <!-- Send text messages -->
-            
         </div>
     </div>
-
     <!-- Load jQuery and Socket.io -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
         let you = ''; // Declare 'you' variable in the global scope
-
         // Function to send text messages
         function send() {
             var message = document.getElementById("input").value;
@@ -58,7 +53,6 @@
 
             // Show popup form when the page loads
             popupForm.show();
-
             // Handle form submission to capture the user's name
             userInfoForm.submit(function (event) {
                 event.preventDefault();
@@ -69,10 +63,8 @@
                 }
                 popupForm.hide(); // Hide the popup form
             });
-
             const socket = io();
             const messagesList = $('#messages');
-
             // Handle sending text messages
             $('#sendBtn').click(function () {
                 const message = $('#input').val();
@@ -81,7 +73,6 @@
                     $('#input').val('');
                 }
             });
-
             // Handle sending GIFs
             $('#gifInput').on('change', function (e) {
                 const file = e.target.files[0];
@@ -91,10 +82,8 @@
                     const gifData = event.target.result;
                     socket.emit('send gif', { username: you, gifData: gifData });
                 };
-
                 reader.readAsDataURL(file);
             });
-
             // Handle receiving text messages
             socket.on('chat message', function (data) {
                 const { username, message } = data;
@@ -103,7 +92,6 @@
                 messagesList.append(messageElement);
                 messagesList.scrollTop(messagesList.prop("scrollHeight"));
             });
-
             // Handle receiving GIFs
             socket.on('receive gif', function (data) {
                 const { username, gifData } = data;
