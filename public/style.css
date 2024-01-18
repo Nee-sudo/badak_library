@@ -117,14 +117,6 @@ input[type="submit"]:hover {
   height:80%;
   width: 100% 
 };
-
-/* batcheet-header */
-.chat-header{
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
 /* Overlay background */
 .overlay {
   display: none;
