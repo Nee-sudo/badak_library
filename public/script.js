@@ -64,11 +64,6 @@ function fetchPDFList() {
           popup.style.display = 'block';
           popup.appendChild(iframeElement);
         });
-        iframeElement.addEventListener('error', (event) => {
-        console.error('Error loading PDF:', event);
-        // Handle the error, such as displaying a message to the user
-});
-
         const embedContainer = document.createElement('div');
         embedContainer.classList.add('embed-container');
         const embedElement = document.createElement('embed');
