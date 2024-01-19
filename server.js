@@ -19,55 +19,40 @@ mongoose.connect(MONGO_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// Define the MongoDB model
+// MongoDB model
 const pdfSchema = new mongoose.Schema({
   studentname: String,
   title: [String],
   name: String,
   size: Number,
-  path: String,
+  content: Buffer, // Store the PDF content as a Buffer
 });
 
 const PDF = mongoose.model('PDF', pdfSchema);
 
 // Serve static files from the 'public' folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Serve static files from the 'uploads' folder (PDF files)
-
-
-
-// Serve the 'uploads' folder
-app.use('/uploads', express.static('uploads'));
+app.use(express.static('public'));
 
 // Multer configuration for file upload
-const storage = multer.diskStorage({
-  destination: './uploads',
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  },
-});
+const storage = multer.memoryStorage(); // Store files in memory as Buffers
 const upload = multer({ storage: storage });
 
 app.use(express.json()); // Parse JSON-encoded bodies
 
+// Upload route
 app.post('/upload', upload.single('pdf'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No PDF file provided' });
   }
 
-  console.log('pdfTitle:', req.body.pdfTitle);
-  const pdfTitle = req.body.pdfTitle;
-  const studentnames = req.body.studentname; // Corrected property name
-  console.log(studentnames);
+  const { pdfTitle, studentname } = req.body;
 
-  // Save the file details in the MongoDB collection
   const pdf = new PDF({
-    studentname: studentnames, // Corrected property name
+    studentname,
     title: pdfTitle,
     name: req.file.originalname,
     size: req.file.size,
-    path: req.file.path,
+    content: req.file.buffer, // Save the PDF content as a Buffer
   });
 
   try {
@@ -77,6 +62,23 @@ app.post('/upload', upload.single('pdf'), async (req, res) => {
   } catch (err) {
     console.error('Error saving PDF details:', err);
     res.status(500).json({ error: 'Failed to save PDF details' });
+  }
+});
+
+// Serve PDFs dynamically
+app.get('/pdf/:id', async (req, res) => {
+  try {
+    const pdf = await PDF.findById(req.params.id);
+    if (!pdf) {
+      return res.status(404).json({ error: 'PDF not found' });
+    }
+
+    // Serve the PDF file from the database
+    res.setHeader('Content-Type', 'application/pdf');
+    res.send(pdf.content);
+  } catch (error) {
+    console.error('Error serving PDF:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
@@ -93,26 +95,23 @@ io.on('connection', (socket) => {
     console.log(msg.username);
     console.log({ message: msg });
   });
-
-
 });
-
-app.get('/pdfs', async (req, res) => {
+// Serve PDFs dynamically
+app.get('/pdf/:id', async (req, res) => {
   try {
-    const pdfs = await PDF.find({}, 'title path');
-    res.json(pdfs);
-    setHeaders: (res, path) => {
-      if (path.endsWith('.pdf')) {
-        res.setHeader('Content-Disposition', 'inline'); // Set to "inline" instead of "attachment"
-      }
+    const pdf = await PDF.findById(req.params.id);
+    if (!pdf) {
+      return res.status(404).json({ error: 'PDF not found' });
     }
-  } catch (err) {
-    console.error('Error fetching PDFs:', err);
-    res.status(500).json({ error: 'Failed to fetch PDFs' });
-  }
-});
 
-// Start the server
-server.listen(port, () => {
+    // Set headers for PDF response
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline'); // Set to "inline" instead of "attachment"
+    res.send(pdf.content);
+  } catch (error) {
+    console.error('Error serving PDF:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
