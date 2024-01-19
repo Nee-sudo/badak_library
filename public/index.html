@@ -17,7 +17,6 @@
         <li><a href="#contact">Contact</a></li>
         <li class="right"><a href="#about">About</a></li>
       </ul>
-
     <div class="book_container">
         <div class="book1"><img name="bookImage" src="" alt=""></div>
     </div>
@@ -28,26 +27,19 @@
             <label for="studentname">Student name</label>
             <input type="text" id="studentname" name="studentname" placeholder="Enter your name" required>
             <label for="pdfTitle">Subject</label>
-            <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter the subject" required>            
-            
+            <input type="text" id="pdfTitle" name="pdfTitle" placeholder="Enter the subject" required>             
             <label for="pdfFile">Select PDF:</label>
             <input type="file" id="pdfFile" name="pdf" accept=".pdf" placeholder="Select a PDF file" required>
             <button type="submit" onclick="closeform()">Upload</button>
         </form>
-
         <div id="pdfList">
         </div>
     </div>
-
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
         <h2>Pdf viewer</h2>
         <button id="closeButton">Close</button>
     </div>
-    
-    <script src="script.js"></script>
-    
-    
-
+    <script src="script.js"></script> 
 </body>
 </html>
