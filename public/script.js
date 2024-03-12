@@ -40,18 +40,25 @@ function fetchPDFList() {
   })
   .then((data) => {
       data.forEach((pdf) => {
-          const pdfBox = document.createElement('div');
-          pdfBox.classList.add('pdf-box');
-          const titleElement = document.createElement('h2');
-          titleElement.textContent = pdf.title;
-          const openButton = document.createElement('button');
-          openButton.textContent = 'Open PDF';
-          openButton.addEventListener('click', () => {
-              window.open(`/pdf/${pdf._id}`, '_blank');
-          });
-          pdfBox.appendChild(titleElement);
-          pdfBox.appendChild(openButton);
-          pdfList.appendChild(pdfBox);
+        const pdfBox = document.createElement('div');
+        pdfBox.classList.add('pdf-box');
+        
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = pdf.title;
+        
+        const btncenter = document.createElement('center'); // Create center element
+        const openButton = document.createElement('button');
+        openButton.textContent = 'Open PDF';
+        openButton.addEventListener('click', () => {
+            window.open(`/pdf/${pdf._id}`, '_blank');
+        });
+        
+        btncenter.appendChild(openButton); // Append openButton to btncenter
+        
+        pdfBox.appendChild(titleElement);
+        pdfBox.appendChild(btncenter); // Append btncenter to pdfBox
+        pdfList.appendChild(pdfBox);
+        
       });
   })
   .catch((error) => {
@@ -71,4 +78,16 @@ const popup = document.getElementById('popup');
 closeButton.addEventListener('click', () => {
   overlay.style.display = 'none';
   popup.style.display = 'none';
+  resetPopupContent(); // Reset the popup content
 });
+
+// Function to reset the popup content
+function resetPopupContent() {
+  popup.innerHTML = ''; // Clear the popup content
+  const h2 = document.createElement('h2');
+  h2.textContent = 'Pdf viewer'; // Add your desired content
+  popup.appendChild(h2);
+
+  // You can also close the overlay here if needed
+  overlay.style.display = 'none';
+}

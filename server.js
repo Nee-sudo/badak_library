@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const multer = require('multer');
-const path = require('path');
 const http = require('http');
 const socketIO = require('socket.io');
 const server = http.createServer(app); // Use the existing Express app for the server
