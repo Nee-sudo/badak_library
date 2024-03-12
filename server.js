@@ -73,11 +73,23 @@ app.get('/pdf/:id', async (req, res) => {
       return res.status(404).json({ error: 'PDF not found' });
     }
 
-    // Serve the PDF file from the database
+    // Set headers for PDF response
     res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline'); // Set to "inline" instead of "attachment"
     res.send(pdf.content);
   } catch (error) {
     console.error('Error serving PDF:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+// Serve PDF list
+app.get('/pdfs', async (req, res) => {
+  try {
+    const pdfs = await PDF.find();
+    res.json(pdfs);
+  } catch (error) {
+    console.error('Error fetching PDFs:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
@@ -96,22 +108,7 @@ io.on('connection', (socket) => {
     console.log({ message: msg });
   });
 });
-// Serve PDFs dynamically
-app.get('/pdf/:id', async (req, res) => {
-  try {
-    const pdf = await PDF.findById(req.params.id);
-    if (!pdf) {
-      return res.status(404).json({ error: 'PDF not found' });
-    }
 
-    // Set headers for PDF response
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', 'inline'); // Set to "inline" instead of "attachment"
-    res.send(pdf.content);
-  } catch (error) {
-    console.error('Error serving PDF:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});server.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
