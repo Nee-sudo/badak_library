@@ -176,6 +176,7 @@ body {
 /* Additional styling for the chat header and input container */
 .chat-header {
     background-color: #007bff;
+    font-size: xxx-large;
     color: white;
     padding: 10px;
     text-align: center;

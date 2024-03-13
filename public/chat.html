@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Chatroom</title>
+    <link rel="icon" href="image.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="chat.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -113,6 +114,23 @@
             // Display the chat container
             $('#chat-container').css('display', 'block');
         });
+
+        // Add an event listener to the input field to listen for keydown event
+// Add an event listener to the input field to listen for keydown event
+// Add an event listener to the input field to listen for keydown event
+$('#input').keydown(function(event) {
+    // Check if the pressed key is the Enter key (key code 13)
+    if (event.keyCode === 13) {
+        // Call the send() function to send the message
+        send();
+        
+        // Clear the input field
+        $('#input').val('');
+    }
+});
+
+
+
 
     </script>
 </body>
