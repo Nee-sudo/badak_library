@@ -5,9 +5,9 @@ body {
 }
 
 .chat-container {
+    display: none;
     margin: 0 auto;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 /* batcheet-header */
@@ -25,6 +25,7 @@ body {
 }
 
 .message-container {
+    height: 600px;
     display: flex;
     justify-content: flex-start;
     margin: 5px 0;
@@ -154,7 +155,6 @@ body {
 .message-list {
     max-height: 300px;
     overflow-y: auto;
-    border: 1px solid #ccc;
     padding: 10px;
 }
 

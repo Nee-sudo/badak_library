@@ -9,16 +9,16 @@
         <div class="chat-header">
             Baatcheet
         </div>
-    <div class="chat-container">
-        <!-- The popup form -->
-        <div id="popupForm" class="popup">
-            <h2>Enter your name</h2>
-            <form id="userInfoForm">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required>
-                <input type="submit" id="Submit" value="Submit">
-            </form>
-        </div>
+              <!-- The popup form -->
+              <div id="popupForm" class="popup">
+                <h2>Enter your name</h2>
+                <form id="userInfoForm">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                    <input type="submit" id="Submit" value="Submit">
+                </form>
+            </div>
+    <div  id="chat-container" class="chat-container">
         <!-- Chat messages container -->
         <div class="message-list" id="messages">
             <!-- Messages will be added here -->
@@ -102,6 +102,18 @@
                 messagesList.scrollTop(messagesList.prop("scrollHeight"));
             });
         });
+            const popupSubmit = document.getElementById("Submit");
+            popupSubmit.addEventListener('click', function(event){
+            // Prevent the default form submission behavior
+            event.preventDefault();
+
+            // Hide the popup form
+            $('#popupForm').hide();
+
+            // Display the chat container
+            $('#chat-container').css('display', 'block');
+        });
+
     </script>
 </body>
 </html>
