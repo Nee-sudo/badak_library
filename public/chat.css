@@ -135,7 +135,7 @@ body {
 
 .popup input[type="text"],
 .popup select {
-    width: 100%;
+    width: 94%;
     padding: 5px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -175,6 +175,8 @@ body {
 
 /* Additional styling for the chat header and input container */
 .chat-header {
+    letter-spacing: 5px;
+    font-family: fantasy;
     background-color: #007bff;
     font-size: xxx-large;
     color: white;
