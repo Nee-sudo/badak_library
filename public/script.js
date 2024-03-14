@@ -47,12 +47,23 @@ function fetchPDFList() {
         titleElement.textContent = pdf.title;
         
         const btncenter = document.createElement('center'); // Create center element
+        
+        // Create delete button
+        const deleteButton = document.createElement('button');
+        deleteButton.classList="dlt";
+        deleteButton.textContent = 'Delete';
+        deleteButton.addEventListener('click', () => {
+            deletePDF(pdf._id);
+        });
+        
+        // Create open button
         const openButton = document.createElement('button');
         openButton.textContent = 'Open PDF';
         openButton.addEventListener('click', () => {
             window.open(`/pdf/${pdf._id}`, '_blank');
         });
         
+        btncenter.appendChild(deleteButton); // Append deleteButton to btncenter
         btncenter.appendChild(openButton); // Append openButton to btncenter
         
         pdfBox.appendChild(titleElement);
@@ -90,4 +101,25 @@ function resetPopupContent() {
 
   // You can also close the overlay here if needed
   overlay.style.display = 'none';
+}
+
+// Add the deletePDF() function to handle PDF deletion
+
+function deletePDF(pdfId) {
+  fetch(`/pdf/${pdfId}`, {
+      method: 'DELETE',
+  })
+  .then((response) => {
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+      return response.json();
+  })
+  .then((data) => {
+      console.log(data);
+      fetchPDFList(); // Refresh the PDF list after deletion
+  })
+  .catch((error) => {
+      console.error('Error:', error);
+  });
 }

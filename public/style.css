@@ -73,13 +73,18 @@ input[type="submit"]:hover {
   margin-bottom: 10px;
 }
 .pdf-box button {
-  display: block;
-  margin: 10px 0;
+  border-radius: 5px;
+  display: -webkit-inline-box;
+  margin: 32px;
   background-color: #007bff;
   color: #fff;
   border: none;
   padding: 8px 16px;
   cursor: pointer;
+}
+
+button.dlt {
+  background-color: red;
 }
 .pdf-box button:hover {
   background-color: #0056b3;

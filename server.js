@@ -93,6 +93,22 @@ app.get('/pdfs', async (req, res) => {
   }
 });
 
+// Delete PDF route
+app.delete('/pdf/:id', async (req, res) => {
+  try {
+    const deletedPDF = await PDF.findByIdAndDelete(req.params.id);
+    if (!deletedPDF) {
+      return res.status(404).json({ error: 'PDF not found' });
+    }
+    console.log('PDF deleted successfully');
+    res.json({ message: 'PDF deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting PDF:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+
 // Socket.IO configuration
 io.on('connection', (socket) => {
   console.log('A user connected');
