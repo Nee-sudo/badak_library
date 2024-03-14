@@ -92,7 +92,6 @@ app.get('/pdfs', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
 // Delete PDF route
 app.delete('/pdf/:id', async (req, res) => {
   try {
@@ -107,8 +106,6 @@ app.delete('/pdf/:id', async (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
-
-
 // Socket.IO configuration
 io.on('connection', (socket) => {
   console.log('A user connected');
