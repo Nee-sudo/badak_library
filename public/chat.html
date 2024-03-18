@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Chatroom</title>
     <link rel="icon" href="image.png" type="image/x-icon">
     <link rel="stylesheet" type="text/css" href="chat.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
 <body>
-        <div class="chat-header">
-            Baatcheet
-        </div>
-              <!-- The popup form -->
-              <div id="popupForm" class="popup">
-                <h2>Enter your name</h2>
-                <form id="userInfoForm">
-                    <input type="text" id="name" name="name" required>
-                    <center><input type="submit" id="Submit" value="Submit"></center>
-                </form>
-            </div>
-    <div  id="chat-container" class="chat-container">
+    <div class="chat-header">
+        Baatcheet
+    </div>
+    <!-- The popup form -->
+    <div id="popupForm" class="popup">
+        <h2>Enter your name</h2>
+        <form id="userInfoForm">
+            <input type="text" id="name" name="name" required>
+            <center><input type="submit" id="Submit" value="Submit"></center>
+        </form>
+    </div>
+    <div id="chat-container" class="chat-container" style="display: none;"> <!-- Initially hidden -->
         <!-- Chat messages container -->
         <div class="message-list" id="messages">
             <!-- Messages will be added here -->
@@ -26,25 +28,17 @@
         <!-- Input container for messages and GIFs -->
         <div class="input-container">
             <input id="input" autocomplete="off" />
-            <button id="sendBtn" onclick="send()">Send</button> <!-- Send text messages -->
+            <button id="sendBtn">Send</button> <!-- Send text messages -->
         </div>
     </div>
     <!-- Load jQuery and Socket.io -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        let you = ''; // Declare 'you' variable in the global scope
-        // Function to send text messages
-        function send() {
-            var message = document.getElementById("input").value;
-            if (message.trim() === '') {
-                alert("Enter your message please");
-                return;
-            }
-            console.log(message);
-            var html = '<div class="message receiver-message">' + message + '</div>';
-            document.getElementById("messages").innerHTML += html;
-        }
+        // Initialize socket connection
+        const socket = io();
+
+        let you = ''; // Variable to store the username
 
         $(function () {
             const popupForm = $('#popupForm');
@@ -53,6 +47,7 @@
 
             // Show popup form when the page loads
             popupForm.show();
+
             // Handle form submission to capture the user's name
             userInfoForm.submit(function (event) {
                 event.preventDefault();
@@ -62,75 +57,53 @@
                     return;
                 }
                 popupForm.hide(); // Hide the popup form
+                // Show the chat container
+                $('#chat-container').show();
             });
-            const socket = io();
-            const messagesList = $('#messages');
-            // Handle sending text messages
-            $('#sendBtn').click(function () {
-                const message = $('#input').val();
-                if (message.trim() !== '') {
-                    socket.emit('chat message', { username: you, message: message });
-                    $('#input').val('');
+
+            // Handle sending text messages when the send button is clicked
+            $('#sendBtn').click(send);
+
+            // Handle sending text messages when Enter key is pressed
+            $('#input').keydown(function (event) {
+                if (event.keyCode === 13) {
+                    send();
                 }
             });
-            // Handle sending GIFs
-            $('#gifInput').on('change', function (e) {
-                const file = e.target.files[0];
-                const reader = new FileReader();
 
-                reader.onload = function (event) {
-                    const gifData = event.target.result;
-                    socket.emit('send gif', { username: you, gifData: gifData });
-                };
-                reader.readAsDataURL(file);
-            });
             // Handle receiving text messages
             socket.on('chat message', function (data) {
                 const { username, message } = data;
                 const messageClass = username === 'Sender' ? 'receiver-message' : 'sender-message';
+
+                // Check if the message is from the current user
+                if (username === you) {
+                    return; // Skip rendering the message sent by the current user
+                }
+
+                // Render the message
                 const messageElement = $('<div class="message ' + messageClass + '">').text(`${username}: ${message}`);
-                messagesList.append(messageElement);
-                messagesList.scrollTop(messagesList.prop("scrollHeight"));
+                $('#messages').append(messageElement);
+                $('#messages').scrollTop($('#messages').prop("scrollHeight"));
             });
-            // Handle receiving GIFs
-            socket.on('receive gif', function (data) {
-                const { username, gifData } = data;
-                const gifElement = $('<img class="message-gif">').attr('src', gifData);
-                const messageContainer = $('<div class="message-container">');
-                messageContainer.append(`${username}: `, gifElement);
-                messagesList.append(messageContainer);
-                messagesList.scrollTop(messagesList.prop("scrollHeight"));
-            });
-        });
-            const popupSubmit = document.getElementById("Submit");
-            popupSubmit.addEventListener('click', function(event){
-            // Prevent the default form submission behavior
-            event.preventDefault();
 
-            // Hide the popup form
-            $('#popupForm').hide();
-
-            // Display the chat container
-            $('#chat-container').css('display', 'block');
         });
 
-        // Add an event listener to the input field to listen for keydown event
-// Add an event listener to the input field to listen for keydown event
-// Add an event listener to the input field to listen for keydown event
-$('#input').keydown(function(event) {
-    // Check if the pressed key is the Enter key (key code 13)
-    if (event.keyCode === 13) {
-        // Call the send() function to send the message
-        send();
-        
-        // Clear the input field
-        $('#input').val('');
-    }
-});
-
-
-
-
+        // Function to send text messages
+        function send() {
+            var message = document.getElementById("input").value;
+            if (message.trim() === '') {
+                alert("Enter your message please");
+                return;
+            }
+            // Emit the message along with the username to the server
+            socket.emit('chat message', { username: you, message: message });
+            console.log("message sent ");
+            $('#input').val('');
+            var html = '<div class="message receiver-message">' + message + '</div>';
+            document.getElementById("messages").innerHTML += html;
+        }
     </script>
 </body>
+
 </html>
