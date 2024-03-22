@@ -6,15 +6,17 @@ const http = require('http');
 const socketIO = require('socket.io');
 const server = http.createServer(app); // Use the existing Express app for the server
 const io = socketIO(server);
+const dotenv = require('dotenv');
 
 const port = process.env.PORT || 4000;
+const mongoURI = process.env.MONGO_URI;
 
 // MongoDB configuration
-const MONGO_URI = 'mongodb+srv://neer:bjFBXFCYd00Gifiv@pdf-uploading-site.ges8oic.mongodb.net/?retryWrites=true&w=majority';
-mongoose.connect(MONGO_URI, {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
