@@ -8,9 +8,18 @@ const server = http.createServer(app); // Use the existing Express app for the s
 const io = socketIO(server);
 const dotenv = require('dotenv');
 
+require('dotenv').config();
+
+// Example usage
 const port = process.env.PORT || 4000;
 const mongoURI = process.env.MONGO_URI;
 
+// MongoDB configuration
+// const MONGO_URI = 'mongodb+srv://neer:bjFBXFCYd00Gifiv@pdf-uploading-site.ges8oic.mongodb.net/?retryWrites=true&w=majority';
+// mongoose.connect(MONGO_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// });
 // MongoDB configuration
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
